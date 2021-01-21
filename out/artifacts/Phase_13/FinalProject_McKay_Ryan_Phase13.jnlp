@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="FinalProject_McKay_Ryan_Phase13.jnlp">
+    <information>
+        <title>jar</title>
+        <vendor>Unknown</vendor>
+        <description>jar</description>
+        <offline-allowed/>
+    </information>
+    <update check="background"/>
+    <resources>
+        <j2se version="9.0.1+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="FinalProject_McKay_Ryan_Phase13.jar" size="34120" download="eager"/>
+    </resources>
+    <jfx:javafx-desc width="600" height="400" main-class="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2017.3\jre32\lib\ext\jfxrt.jar" name="jar"/>
+</jnlp>
+

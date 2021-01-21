@@ -1,0 +1,19 @@
+-What is Phase 13?-
+Phase 13 was originally created by Nicholas Lavelle, for the Santa Rosa Nazarene Church. It is a 13 week program, where each week is referred to as a Phase. Week one is Phase 1, week two is Phase 2, etc. The first Phase would originally start on a Thursday, the day of our church’s youth group. Each Phase has a set of challenges to complete, and upon completion, you would go and check in with the Youth Pastor, and if he approved completion, you got a prize and could continue on to the next phase. All the challenges were displayed in a pamphlet, with each subsequent Phase sealed by a sticker that you would remove after completing the previous Phase
+
+-What is this program?-
+This is program is an accompanying desktop application to Phase 13. It can be used to enter and view one’s progress in Phase 13.
+
+-Instructions for use-
+On the first time starting up the program, it will open up to the Phase 13 start screen. Here you can enter in the date you would like to begin the Phase 13 program. After entering today’s date, or a date in the past, you will be brought to Phase 1. Here you will see the challenges for the current Phase. On the left-hand side of the screen you can enter in your progress and on the right-hand side your progress is displayed. 
+There are two types of challenges: Text field challenges, and single check box challenges.
+The text field challenges present are the pushups, squats, and prayer challenges. To enter in your progress for a text field challenge, type a numeric value into the text field bellow the challenge title and press the enter button next to the text field.
+For the single check box challenges, click the check box underneath the challenge title to mark your completion of that challenge.
+The arrows on the top left and right of the screen allow you to move the next and previous Phases. You may continue on to the next Phase only after your current Phase has been completed, and the next Phase’s starting date has been reached. 
+If you are viewing the first Phase, and hit the left arrow, you will be brought to the start over screen. Here you are given the option to start Phase 13 over, where you will be subsequently brought to the starting screen to enter in a new date, or the option to press the right arrow key and return to Phase 1.
+If on the start screen you entered in a date into the future, you will also be brought to the start over screen. You will only be able to continue on to the first Phase when Phase 1’s starting date has been reached.
+Upon completing Phase 13 and pressing the right arrow, you will be brought to an alternate version of the start over screen that congratulates you for finishing Phase 13.
+
+-Advice for testing-
+To test the unlock dates you can change your computer system’s clock.
+To bypass the date unlocking system, you can enter in a date over 13 weeks ago.
