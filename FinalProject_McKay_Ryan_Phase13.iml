@@ -16,7 +16,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="JavaFX 15.0.1" level="project" />
     <orderEntry type="library" exported="" name="JavaFX lib" level="application" />
   </component>
 </module>
