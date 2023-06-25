@@ -72,6 +72,6 @@
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </padding>
       </Label>
-      <Label prefHeight="67.0" prefWidth="213.0" text="(Please note: After pressing the enter button, it will take some time for all the phases to be created)" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+      <Label prefHeight="67.0" prefWidth="213.0" text="(Please note: After pressing the enter button, it may take a brief moment for all of the phases to be created)" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
    </children>
 </GridPane>

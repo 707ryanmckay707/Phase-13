@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 
 import edu.srjc.finalproject.mckay.ryan.phase13.customalerts.DatabaseAccessError;
 import edu.srjc.finalproject.mckay.ryan.phase13.customalerts.FxmlLoadingErrorAlert;
+import edu.srjc.finalproject.mckay.ryan.phase13.customalerts.DatabaseInsertError;
 import edu.srjc.finalproject.mckay.ryan.phase13.scenes.phase.PhaseSceneController;
 import edu.srjc.finalproject.mckay.ryan.phase13.phase.challenge.TextFieldChallenge;
 import edu.srjc.finalproject.mckay.ryan.phase13.scenes.startover.StartOverSceneController;
@@ -198,13 +199,15 @@ public class StartSceneController implements Initializable
         try(Connection connection = DriverManager.getConnection(DATABASE_URL))
         {
             Statement databaseStatement = connection.createStatement();
+            connection.setAutoCommit(false);
+
             String sqlStatement = null;
 
             for(int index = 0; index < NUM_OF_PHASES; index++)
             {
                 sqlStatement = "INSERT INTO PhaseCommonsTable VALUES ('"
                         + (index + 1) + "', '" + phaseStartDates.get(index).toString() + "', '0')";
-                databaseStatement.execute(sqlStatement);
+                databaseStatement.addBatch(sqlStatement);
             }
 
             for(int index = 0; index < pushupsChallenges.length; index ++)
@@ -212,7 +215,7 @@ public class StartSceneController implements Initializable
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + pushupsChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.PUSHUPS
                         + "', '0', '" + pushupsChallenges[index][1] + "')";
-                databaseStatement.execute(sqlStatement);
+                databaseStatement.addBatch(sqlStatement);
             }
 
             for(int index = 0; index < squatsChallenges.length; index ++)
@@ -220,7 +223,7 @@ public class StartSceneController implements Initializable
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + squatsChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.SQUATS
                         + "', '0', '" + squatsChallenges[index][1] + "')";
-                databaseStatement.execute(sqlStatement);
+                databaseStatement.addBatch(sqlStatement);
             }
 
             for(int index = 0; index < prayerChallenges.length; index ++)
@@ -228,7 +231,7 @@ public class StartSceneController implements Initializable
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + prayerChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.PRAYER
                         + "', '0', '" + prayerChallenges[index][1] + "')";
-                databaseStatement.execute(sqlStatement);
+                databaseStatement.addBatch(sqlStatement);
             }
 
             for(int index = 0; index < singleCheckBoxChallenges.length; index++)
@@ -236,7 +239,7 @@ public class StartSceneController implements Initializable
                 sqlStatement = "INSERT INTO SingleCheckBoxChallengesTable VALUES ('"
                         + singleCheckBoxChallenges[index][0] + "', '" + singleCheckBoxChallenges[index][1]
                         + "', '0')";
-                databaseStatement.execute(sqlStatement);
+                databaseStatement.addBatch(sqlStatement);
             }
 
             for(int index = 0; index < otherChallenges.length; index++)
@@ -244,7 +247,19 @@ public class StartSceneController implements Initializable
                 sqlStatement = "INSERT INTO SingleCheckBoxChallengesTable VALUES ('"
                         + otherChallenges[index][0] + "', '" + otherChallenges[index][1]
                         + "', '0')";
-                databaseStatement.execute(sqlStatement);
+                databaseStatement.addBatch(sqlStatement);
+            }
+
+            databaseStatement.executeBatch();
+            try
+            {
+                connection.commit();
+                connection.close();
+            }
+            catch (Exception exception)
+            {
+                connection.rollback();
+                DatabaseInsertError databaseInsertError = new DatabaseInsertError();
             }
         }
         catch (Exception exception)

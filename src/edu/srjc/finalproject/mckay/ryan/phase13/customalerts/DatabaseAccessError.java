@@ -27,7 +27,7 @@ public class DatabaseAccessError extends Alert
                 + "Please make sure it is located in the correct place: "
                 + "FinalProject_McKay_Ryan_Phase13\\database\\Phase13.db\n\n"
                 + "Pressing Close will close the application so you can try re-starting it.\n\n"
-                + "If neither of the options fix the problem you may need to redownload the application.",
+                + "If neither of the options fix the problem you may need to re-download the application.",
                 ButtonType.CLOSE);
         this.setTitle("An error has occurred.");
         this.setHeaderText(null);
