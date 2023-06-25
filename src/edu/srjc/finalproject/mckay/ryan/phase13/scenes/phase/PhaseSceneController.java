@@ -76,65 +76,72 @@ public class PhaseSceneController implements Initializable
         }
     }
 
+
     @FXML
     public void nextSceneButtonPressed(ActionEvent actionEvent)
     {
-        if (!(phases.get(currentPhase).phaseIsCompleted()))
+        if (phases.get(currentPhase).phaseIsCompleted())
         {
-            int numOfChallengesCompleted = 0;
-            for (int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
+            nextScene();
+            return;
+        }
+
+        // A user completes a phase after hitting next,
+        // as long as all of the challenges for that phase are completed
+        // and if that phase's week has ended
+
+        // Get the number of challenges completed in the current phase
+        int numOfChallengesCompleted = 0;
+        for (int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
+        {
+            if (phases.get(currentPhase).getPhaseChallenges().get(challengeNumber).challengeIsCompleted())
             {
-                if (phases.get(currentPhase).getPhaseChallenges().get(challengeNumber).challengeIsCompleted())
-                {
-                    numOfChallengesCompleted++;
-                }
+                numOfChallengesCompleted++;
             }
+        }
 
-            if (numOfChallengesCompleted == phases.get(currentPhase).getPhaseChallenges().size())
+        // If all of the challenges in the current phase are completed
+        if (numOfChallengesCompleted == phases.get(currentPhase).getPhaseChallenges().size())
+        {
+            LocalDate currentDate = LocalDate.now();
+            // And, if we are past or at the next phase start date (Or if we just finished the final phase)
+            if (currentPhase == 12 || (currentDate.compareTo(phases.get(currentPhase + 1).getPhaseStartDate()) >= 0))
             {
-                LocalDate currentDate = LocalDate.now();
-                if (currentPhase == 12 || (currentDate.compareTo(phases.get(currentPhase + 1).getPhaseStartDate()) >= 0))
+                phases.get(currentPhase).setPhaseIsCompleted(true);
+                try (Connection connection = DriverManager.getConnection(DATABASE_URL))
                 {
-                    phases.get(currentPhase).setPhaseIsCompleted(true);
-                    try (Connection connection = DriverManager.getConnection(DATABASE_URL))
-                    {
-                        Statement databaseStatement = connection.createStatement();
-                        String sqlStatement = "UPDATE PhaseCommonsTable SET phaseIsCompleted = 1 WHERE phaseNum = "
-                                + (currentPhase + 1);
-                        databaseStatement.execute(sqlStatement);
-                    }
-                    catch (Exception exception)
-                    {
-                        DatabaseAccessError databaseAccessError = new DatabaseAccessError();
-                    }
+                    Statement databaseStatement = connection.createStatement();
+                    String sqlStatement = "UPDATE PhaseCommonsTable SET phaseIsCompleted = 1 WHERE phaseNum = "
+                            + (currentPhase + 1);
+                    databaseStatement.execute(sqlStatement);
+                }
+                catch (Exception exception)
+                {
+                    DatabaseAccessError databaseAccessError = new DatabaseAccessError();
+                }
 
-                    nextScene();
-                }
-                else
-                {
-                    Alert nextPhaseUnlockDateAlert = new Alert(Alert.AlertType.INFORMATION,
-                            "The next phase will unlock on "
-                                    + phases.get(currentPhase + 1).getPhaseStartDate().getMonthValue()
-                                    + "/" + phases.get(currentPhase + 1).getPhaseStartDate().getDayOfMonth()
-                                    + "/" + phases.get(currentPhase + 1).getPhaseStartDate().getYear() + ".",
-                            ButtonType.OK);
-                    nextPhaseUnlockDateAlert.setTitle("Almost!");
-                    nextPhaseUnlockDateAlert.setHeaderText(null);
-                    nextPhaseUnlockDateAlert.showAndWait();
-                }
+                nextScene();
             }
             else
             {
-                Alert phaseNotCompletedAlert = new Alert(Alert.AlertType.WARNING,
-                        "Please finish the current phase before continuing on.", ButtonType.OK);
-                phaseNotCompletedAlert.setTitle("Not Yet!");
-                phaseNotCompletedAlert.setHeaderText(null);
-                phaseNotCompletedAlert.showAndWait();
+                Alert nextPhaseUnlockDateAlert = new Alert(Alert.AlertType.INFORMATION,
+                        "The next phase will unlock on "
+                                + phases.get(currentPhase + 1).getPhaseStartDate().getMonthValue()
+                                + "/" + phases.get(currentPhase + 1).getPhaseStartDate().getDayOfMonth()
+                                + "/" + phases.get(currentPhase + 1).getPhaseStartDate().getYear() + ".",
+                        ButtonType.OK);
+                nextPhaseUnlockDateAlert.setTitle("Almost!");
+                nextPhaseUnlockDateAlert.setHeaderText(null);
+                nextPhaseUnlockDateAlert.showAndWait();
             }
         }
         else
         {
-            nextScene();
+            Alert phaseNotCompletedAlert = new Alert(Alert.AlertType.WARNING,
+                    "Please finish the current phase before continuing on.", ButtonType.OK);
+            phaseNotCompletedAlert.setTitle("Not Yet!");
+            phaseNotCompletedAlert.setHeaderText(null);
+            phaseNotCompletedAlert.showAndWait();
         }
     }
 
