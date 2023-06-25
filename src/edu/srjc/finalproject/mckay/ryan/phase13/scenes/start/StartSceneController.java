@@ -219,7 +219,7 @@ public class StartSceneController implements Initializable
             {
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + squatsChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.SQUATS
-                        + "', '0', '" + pushupsChallenges[index][1] + "')";
+                        + "', '0', '" + squatsChallenges[index][1] + "')";
                 databaseStatement.execute(sqlStatement);
             }
 
