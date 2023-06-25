@@ -89,7 +89,7 @@ public class StartOverSceneController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        if(currentPhase == (NUM_OF_PHASES - 1))
+        if (currentPhase == (NUM_OF_PHASES - 1))
         {
             previousSceneButton.setDisable(false);
             previousSceneButton.setVisible(true);
@@ -102,11 +102,11 @@ public class StartOverSceneController implements Initializable
             previousSceneButton.setVisible(false);
             nextSceneButton.setDisable(false);
             nextSceneButton.setVisible(true);
-            if(phase13IsCompleted)
+            if (phase13IsCompleted)
             {
                 startOverSceneLabel.setText("Congratulations on completing Phase 13! Would you like to start it over?");
             }
-            else if(!firstPhaseUnlocked)
+            else if (!firstPhaseUnlocked)
             {
                 startOverSceneLabel.setText("The first phase in Phase 13\n has not begun yet.");
             }

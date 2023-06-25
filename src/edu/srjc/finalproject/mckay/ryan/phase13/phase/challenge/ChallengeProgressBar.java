@@ -55,7 +55,7 @@ public class ChallengeProgressBar
 
     public void updateProgressBar(int currentNumCompleted, int requiredNumCompleted)
     {
-        if(currentNumCompleted >= requiredNumCompleted)
+        if (currentNumCompleted >= requiredNumCompleted)
         {
             progressBar.setProgress(1);
             progressBarLabel.setText("Completed");

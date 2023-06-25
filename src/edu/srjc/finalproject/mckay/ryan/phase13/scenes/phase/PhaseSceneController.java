@@ -79,18 +79,18 @@ public class PhaseSceneController implements Initializable
     @FXML
     public void nextSceneButtonPressed(ActionEvent actionEvent)
     {
-        if(!(phases.get(currentPhase).phaseIsCompleted()))
+        if (!(phases.get(currentPhase).phaseIsCompleted()))
         {
             int numOfChallengesCompleted = 0;
-            for(int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
+            for (int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
             {
-                if(phases.get(currentPhase).getPhaseChallenges().get(challengeNumber).challengeIsCompleted())
+                if (phases.get(currentPhase).getPhaseChallenges().get(challengeNumber).challengeIsCompleted())
                 {
                     numOfChallengesCompleted++;
                 }
             }
 
-            if(numOfChallengesCompleted == phases.get(currentPhase).getPhaseChallenges().size())
+            if (numOfChallengesCompleted == phases.get(currentPhase).getPhaseChallenges().size())
             {
                 LocalDate currentDate = LocalDate.now();
                 if (currentPhase == 12 || (currentDate.compareTo(phases.get(currentPhase + 1).getPhaseStartDate()) >= 0))
@@ -140,13 +140,13 @@ public class PhaseSceneController implements Initializable
 
     private void nextScene()
     {
-        if(currentPhase < (NUM_OF_PHASES - 1))
+        if (currentPhase < (NUM_OF_PHASES - 1))
         {
             clearMainGridPane();
             currentPhase += 1;
             updateMainGridPane();
         }
-        else if(currentPhase == (NUM_OF_PHASES - 1))
+        else if (currentPhase == (NUM_OF_PHASES - 1))
         {
             phase13IsCompleted = true;
             try
@@ -171,7 +171,7 @@ public class PhaseSceneController implements Initializable
 
     public void retrievePhaseProgress()
     {
-        try(Connection connection = DriverManager.getConnection(DATABASE_URL))
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL))
         {
             Statement databaseStatement = connection.createStatement();
             String sqlStatement = null;
@@ -179,7 +179,7 @@ public class PhaseSceneController implements Initializable
 
             sqlStatement = "SELECT * FROM PhaseCommonsTable";
             resultSet = databaseStatement.executeQuery(sqlStatement);
-            while(resultSet.next())
+            while (resultSet.next())
             {
                 phases.add(new Phase(resultSet));
             }
@@ -187,7 +187,7 @@ public class PhaseSceneController implements Initializable
             sqlStatement = "SELECT * FROM TextFieldChallengesTable";
             resultSet = databaseStatement.executeQuery(sqlStatement);
             int phaseNum = 0;
-            while(resultSet.next())
+            while (resultSet.next())
             {
                 phaseNum = resultSet.getInt(1);
                 phases.get(phaseNum - 1).getPhaseChallenges().add(new TextFieldChallenge(resultSet));
@@ -195,13 +195,13 @@ public class PhaseSceneController implements Initializable
 
             sqlStatement = "SELECT * FROM SingleCheckBoxChallengesTable";
             resultSet = databaseStatement.executeQuery(sqlStatement);
-            while(resultSet.next())
+            while (resultSet.next())
             {
                 phaseNum = resultSet.getInt(1);
                 phases.get(phaseNum - 1).getPhaseChallenges().add(new SingleCheckBoxChallenge(resultSet));
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             DatabaseAccessError databaseAccessError = new DatabaseAccessError();
         }
@@ -210,7 +210,7 @@ public class PhaseSceneController implements Initializable
 
     public void updateMainGridPane()
     {
-        for(int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
+        for (int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
         {
             mainGridPane.add(phases.get(currentPhase).getPhaseChallenges().get(challengeNumber)
                     .getChallengeGridpane(), 0, (challengeNumber + 1));
@@ -223,7 +223,7 @@ public class PhaseSceneController implements Initializable
 
     public void clearMainGridPane()
     {
-        for(int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
+        for (int challengeNumber = 0; challengeNumber < phases.get(currentPhase).getPhaseChallenges().size(); challengeNumber++)
         {
             mainGridPane.getChildren().remove(phases.get(currentPhase).getPhaseChallenges().get(challengeNumber)
                     .getChallengeGridpane());

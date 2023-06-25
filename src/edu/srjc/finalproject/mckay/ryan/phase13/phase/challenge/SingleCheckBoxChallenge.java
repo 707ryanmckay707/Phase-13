@@ -44,7 +44,7 @@ public class SingleCheckBoxChallenge extends Challenge
         getChallengeGridpane().add(checkBox, 0, 1);
         getChallengeGridpane().setMargin(checkBox, DEFAULT_INSETS);
 
-        if(challengeIsCompleted())
+        if (challengeIsCompleted())
         {
             checkBox.setSelected(true);
             checkBox.setDisable(true);
@@ -59,7 +59,7 @@ public class SingleCheckBoxChallenge extends Challenge
         setCurrentNumCompleted(1);
         challengeProgressBar.updateProgressBar(getCurrentNumCompleted(), getRequiredNumCompleted());
 
-        try(Connection connection = DriverManager.getConnection(DATABASE_URL))
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL))
         {
             Statement databaseStatement = connection.createStatement();
             String sqlStatement = "UPDATE SingleCheckBoxChallengesTable SET challengeIsCompleted = " + getCurrentNumCompleted() + " WHERE phaseNum = "

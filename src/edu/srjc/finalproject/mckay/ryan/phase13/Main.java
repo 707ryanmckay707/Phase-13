@@ -71,19 +71,19 @@ public class Main extends Application
             FxmlLoadingErrorAlert fxmlLoadingErrorAlert = new FxmlLoadingErrorAlert("StartScene.fxml");
         }
 
-        try(Connection connection = DriverManager.getConnection(DATABASE_URL))
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL))
         {
             Statement databaseStatement = connection.createStatement();
             String sqlStatement = "SELECT phaseIsCompleted FROM PhaseCommonsTable";
             ResultSet resultSet = databaseStatement.executeQuery(sqlStatement);
 
             //if Phase 13 has been started
-            if(resultSet.next())
+            if (resultSet.next())
             {
                 boolean currentPhaseFound = false;
                 do
                 {
-                    if(resultSet.getInt(PHASE_IS_COMPLETED_LOCATION) == 0)
+                    if (resultSet.getInt(PHASE_IS_COMPLETED_LOCATION) == 0)
                     {
                         try
                         {
@@ -126,7 +126,7 @@ public class Main extends Application
                         currentPhaseFound = true;
                     }
                     //if the current Phase is the last phase and if that Phase is completed
-                    else if((currentPhase == (NUM_OF_PHASES - 1)) && resultSet.getInt(PHASE_IS_COMPLETED_LOCATION) == 1)
+                    else if ((currentPhase == (NUM_OF_PHASES - 1)) && resultSet.getInt(PHASE_IS_COMPLETED_LOCATION) == 1)
                     {
                         phase13IsCompleted = true;
 
@@ -155,14 +155,14 @@ public class Main extends Application
                     {
                         currentPhase++;
                     }
-                } while(resultSet.next() && (!currentPhaseFound));
+                } while (resultSet.next() && (!currentPhaseFound));
             }
             else
             {
                 mainStage.setScene(startScene);
             }
         }
-        catch(Exception exception)
+        catch (Exception exception)
         {
             DatabaseAccessError databaseAccessError = new DatabaseAccessError();
         }

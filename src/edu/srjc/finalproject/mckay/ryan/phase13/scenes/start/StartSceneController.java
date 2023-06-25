@@ -86,7 +86,7 @@ public class StartSceneController implements Initializable
     {
         phaseStartDates = new ArrayList<>();
 
-        if(dateInputIsValid())
+        if (dateInputIsValid())
         {
             Alert confirmDataAlert = new Alert(Alert.AlertType.CONFIRMATION,
                     "Start Phase 13 on " + inMonth + "/" + inDay + "/" + inYear + "?",
@@ -126,9 +126,9 @@ public class StartSceneController implements Initializable
             inYear = Integer.parseInt(yearInputTextField.getText());
             inMonth = Integer.parseInt(monthInputTextField.getText());
             inDay = Integer.parseInt(dayInputTextField.getText());
-            if(inMonth > 0 && inMonth <= 12)
+            if (inMonth > 0 && inMonth <= 12)
             {
-                if(inYear >= 0)
+                if (inYear >= 0)
                 {
                     if (inDay <= numOfDaysPerMonth[inMonth - 1]) {
                         isValid = true;
@@ -145,12 +145,12 @@ public class StartSceneController implements Initializable
                 }
             }
 
-            if(isValid == false)
+            if (isValid == false)
             {
                 throw new InvalidParameterException();
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Alert invalidDateAlert = new Alert(Alert.AlertType.WARNING, "Please enter a valid date.", ButtonType.OK);
             invalidDateAlert.setTitle("Whoops!");
@@ -163,9 +163,9 @@ public class StartSceneController implements Initializable
 
     private void createPhaseStartDates()
     {
-        for(int index = 0; index < NUM_OF_PHASES; index++)
+        for (int index = 0; index < NUM_OF_PHASES; index++)
         {
-            if(index == 0)
+            if (index == 0)
             {
                 phaseStartDates.add(LocalDate.of(inYear, inMonth, inDay));
             }
@@ -178,7 +178,7 @@ public class StartSceneController implements Initializable
 
     private void clearDatabase()
     {
-        try(Connection connection = DriverManager.getConnection(DATABASE_URL))
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL))
         {
             Statement databaseStatement = connection.createStatement();
             String sqlStatement = "DELETE FROM PhaseCommonsTable";
@@ -196,21 +196,21 @@ public class StartSceneController implements Initializable
 
     private void insertStartingDatabaseData()
     {
-        try(Connection connection = DriverManager.getConnection(DATABASE_URL))
+        try (Connection connection = DriverManager.getConnection(DATABASE_URL))
         {
             Statement databaseStatement = connection.createStatement();
             connection.setAutoCommit(false);
 
             String sqlStatement = null;
 
-            for(int index = 0; index < NUM_OF_PHASES; index++)
+            for (int index = 0; index < NUM_OF_PHASES; index++)
             {
                 sqlStatement = "INSERT INTO PhaseCommonsTable VALUES ('"
                         + (index + 1) + "', '" + phaseStartDates.get(index).toString() + "', '0')";
                 databaseStatement.addBatch(sqlStatement);
             }
 
-            for(int index = 0; index < pushupsChallenges.length; index ++)
+            for (int index = 0; index < pushupsChallenges.length; index ++)
             {
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + pushupsChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.PUSHUPS
@@ -218,7 +218,7 @@ public class StartSceneController implements Initializable
                 databaseStatement.addBatch(sqlStatement);
             }
 
-            for(int index = 0; index < squatsChallenges.length; index ++)
+            for (int index = 0; index < squatsChallenges.length; index ++)
             {
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + squatsChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.SQUATS
@@ -226,7 +226,7 @@ public class StartSceneController implements Initializable
                 databaseStatement.addBatch(sqlStatement);
             }
 
-            for(int index = 0; index < prayerChallenges.length; index ++)
+            for (int index = 0; index < prayerChallenges.length; index ++)
             {
                 sqlStatement = "INSERT INTO TextFieldChallengesTable VALUES ('"
                         + prayerChallenges[index][0] + "', '" + TextFieldChallenge.TextFieldChallengeTypes.PRAYER
@@ -234,7 +234,7 @@ public class StartSceneController implements Initializable
                 databaseStatement.addBatch(sqlStatement);
             }
 
-            for(int index = 0; index < singleCheckBoxChallenges.length; index++)
+            for (int index = 0; index < singleCheckBoxChallenges.length; index++)
             {
                 sqlStatement = "INSERT INTO SingleCheckBoxChallengesTable VALUES ('"
                         + singleCheckBoxChallenges[index][0] + "', '" + singleCheckBoxChallenges[index][1]
@@ -242,7 +242,7 @@ public class StartSceneController implements Initializable
                 databaseStatement.addBatch(sqlStatement);
             }
 
-            for(int index = 0; index < otherChallenges.length; index++)
+            for (int index = 0; index < otherChallenges.length; index++)
             {
                 sqlStatement = "INSERT INTO SingleCheckBoxChallengesTable VALUES ('"
                         + otherChallenges[index][0] + "', '" + otherChallenges[index][1]

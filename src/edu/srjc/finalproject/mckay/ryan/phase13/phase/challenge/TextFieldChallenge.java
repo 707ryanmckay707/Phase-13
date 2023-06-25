@@ -50,15 +50,15 @@ public class TextFieldChallenge extends Challenge
         super(resultSet.getInt(PHASE_NUM_LOCATION), resultSet.getInt(CURRENT_NUM_COMPLETED_LOCATION), resultSet.getInt(REQUIRED_NUM_COMLETED_LOCATION));
         try
         {
-            if(resultSet.getString(CHALLENGE_TYPE_LOCATION).equals(TextFieldChallengeTypes.PUSHUPS.toString()))
+            if (resultSet.getString(CHALLENGE_TYPE_LOCATION).equals(TextFieldChallengeTypes.PUSHUPS.toString()))
             {
                 challengeType = TextFieldChallengeTypes.PUSHUPS;
             }
-            else if(resultSet.getString(CHALLENGE_TYPE_LOCATION).equals(TextFieldChallengeTypes.SQUATS.toString()))
+            else if (resultSet.getString(CHALLENGE_TYPE_LOCATION).equals(TextFieldChallengeTypes.SQUATS.toString()))
             {
                 challengeType = TextFieldChallengeTypes.SQUATS;
             }
-            else if(resultSet.getString(CHALLENGE_TYPE_LOCATION).equals(TextFieldChallengeTypes.PRAYER.toString()))
+            else if (resultSet.getString(CHALLENGE_TYPE_LOCATION).equals(TextFieldChallengeTypes.PRAYER.toString()))
             {
                 challengeType = TextFieldChallengeTypes.PRAYER;
             }
@@ -103,27 +103,27 @@ public class TextFieldChallenge extends Challenge
 
     private void enterButtonPressed(ActionEvent actionEvent)
     {
-        if(!(userInputTextField.getText().isEmpty()))
+        if (!(userInputTextField.getText().isEmpty()))
         {
-            if(getCurrentNumCompleted() < getRequiredNumCompleted())
+            if (getCurrentNumCompleted() < getRequiredNumCompleted())
             {
                 try
                 {
                     int userInput = Integer.parseInt(userInputTextField.getText());
-                    if(userInput < 0)
+                    if (userInput < 0)
                     {
                         throw new InvalidParameterException();
                     }
 
                     addToCurrentNumCompleted(userInput);
 
-                    if(challengeIsCompleted())
+                    if (challengeIsCompleted())
                     {
                         userInputTextField.setEditable(false);
                         userInputTextField.setFocusTraversable(false);
                     }
 
-                    try(Connection connection = DriverManager.getConnection(DATABASE_URL))
+                    try (Connection connection = DriverManager.getConnection(DATABASE_URL))
                     {
                         Statement databaseStatement = connection.createStatement();
                         String sqlStatement = "UPDATE TextFieldChallengesTable SET currentNumCompleted = " + getCurrentNumCompleted() + " WHERE phaseNum = "
@@ -148,15 +148,15 @@ public class TextFieldChallenge extends Challenge
                         }
                         databaseStatement.execute(sqlStatement);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         DatabaseAccessError databaseAccessError = new DatabaseAccessError();
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Alert invalidDateAlert = null;
-                    switch(challengeType)
+                    switch (challengeType)
                     {
                         case PUSHUPS:
                         {
